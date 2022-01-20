@@ -1,0 +1,39 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", "sans-serif";
+}
+
+.score-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#outer-box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: rgb(228, 253, 253);
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px aqua;
+  height: 500px;
+  margin: 15px auto;
+}
+
+#outer-box div {
+  width: 85px;
+  height: 85px;
+  margin: 2.5px;
+  background-color: rgba(0, 255, 255, 0.904);
+  border-radius: 5px;
+  box-shadow: 0px 0px 2px rgb(3, 238, 238);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: white;
+  text-shadow: 0 0 2px gray;
+  font-weight: bold;
+}
