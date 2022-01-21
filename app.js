@@ -22,6 +22,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   ButtonMaker();
 
+  // hide Zeros
+  function HideZeros() {
+    for (let i = 0; i < Buttons.length; i++) {
+      if (Buttons[i].innerHTML == 0)
+        Buttons[i].style.color = "rgba(0, 255, 255, 0.904)";
+      else Buttons[i].style.color = "white";
+    }
+  }
+  HideZeros();
+
   // random no. generate
   function randomNumberGenerator() {
     let randomNumber = Math.floor(Math.random() * Buttons.length);
@@ -88,12 +98,16 @@ document.addEventListener("DOMContentLoaded", () => {
   function InputControl(e) {
     if (e.keyCode === 37) {
       keyLeftRightUpDown("left");
+      HideZeros();
     } else if (e.keyCode === 38) {
       keyLeftRightUpDown("up");
+      HideZeros();
     } else if (e.keyCode === 39) {
       keyLeftRightUpDown("right");
+      HideZeros();
     } else if (e.keyCode === 40) {
       keyLeftRightUpDown("down");
+      HideZeros();
     }
   }
   document.addEventListener("keyup", InputControl);
