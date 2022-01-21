@@ -31,38 +31,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //for Left - Right move
   function moveLeftRight(val) {
-    for (let i = 0; i < width * width; i++) {
-      if (i % width == 0) {
-        let row = [];
-        for (let k = 0; k < width; k++) {
-          row.push(parseInt(Buttons[k + i].innerHTML));
-        }
-        console.log("Row", row);
+    for (let i = 0; i < width * width; i = i + width) {
+      let row = [];
+      for (let k = 0; k < width; k++) {
+        row.push(parseInt(Buttons[k + i].innerHTML));
+      }
+      console.log("Row", row);
 
-        let filteredRow = row.filter((num) => num);
-        console.log("Filtered Row", filteredRow);
+      let filteredRow = row.filter((num) => num);
+      console.log("Filtered Row", filteredRow);
 
-        let Number_Of_Blank_Boxes = width - filteredRow.length;
-        let fillZero = Array(Number_Of_Blank_Boxes).fill(0);
-        console.log("Blank Row", fillZero);
+      let Number_Of_Blank_Boxes = width - filteredRow.length;
+      let fillZero = Array(Number_Of_Blank_Boxes).fill(0);
+      console.log("Blank Row", fillZero);
 
-        let newRow =
-          val == "left"
-            ? filteredRow.concat(fillZero)
-            : fillZero.concat(filteredRow);
-        console.log("New Row", newRow);
+      let newRow =
+        val == "left"
+          ? filteredRow.concat(fillZero)
+          : fillZero.concat(filteredRow);
+      console.log("New Row", newRow);
 
-        Buttons[i].innerHTML = newRow[0];
-        Buttons[i + 1].innerHTML = newRow[1];
-        Buttons[i + 2].innerHTML = newRow[2];
-        Buttons[i + 3].innerHTML = newRow[3];
+      for (let k = 0; k < width; k++) {
+        Buttons[i + k].innerHTML = newRow[k];
       }
     }
   }
 
   //combine Row
   function combineRow() {
-    for (let i = 0; i < width * width - 1; i++) {
+    for (let i = 0; i < Buttons.length - 1; i++) {
       if (
         parseInt(Buttons[i].innerHTML) == parseInt(Buttons[i + 1].innerHTML)
       ) {
@@ -80,19 +77,12 @@ document.addEventListener("DOMContentLoaded", () => {
   function InputControl(e) {
     if (e.keyCode === 37) {
       keyLeftRightUpDown("left");
-      return;
-    }
-    if (e.keyCode === 38) {
+    } else if (e.keyCode === 38) {
       keyLeftRightUpDown("up");
-      return;
-    }
-    if (e.keyCode === 39) {
+    } else if (e.keyCode === 39) {
       keyLeftRightUpDown("right");
-      return;
-    }
-    if (e.keyCode === 40) {
+    } else if (e.keyCode === 40) {
       keyLeftRightUpDown("down");
-      return;
     }
   }
   document.addEventListener("keyup", InputControl);
@@ -107,13 +97,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //for Up - Down Move
   function moveUpDown(val) {
-    let column = Array(width * width).fill(0);
-    for (let i = 0; i < width * width; i++) {
-      let count = 0;
-      // column[i / width] = parseInt(Buttons[(i % width) * width + i].innerHTML);
-      console.log((i % width) * width + i);
+    for (let i = 0; i < width; i = i++) {
+      let column = [];
+      for (let k = i; k < Buttons.length; k = k + width) {
+        column.push(parseInt(Buttons[k].innerHTML));
+      }
+      console.log("Column", column);
+
+      let filteredColumn = column.filter((num) => num);
+      console.log("Filtered Column", filteredColumn);
+
+      let Number_Of_Blank_Boxes = width - filteredColumn.length;
+      let fillZero = Array(Number_Of_Blank_Boxes).fill(0);
+      console.log("Blank Row", fillZero);
+
+      let newColumn =
+        val == "up"
+          ? filteredColumn.concat(fillZero)
+          : fillZero.concat(filteredColumn);
+      console.log("New Column", newColumn);
+
+      for (let k = 0; k < width; k++, j = j + width) {
+        Buttons[i + k * width].innerHTML = newColumn[k];
+      }
     }
-    console.log("Column", column);
   }
-  // moveUpDown();
 });
