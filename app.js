@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const outer = document.getElementById("outer-box");
   const scoreDisplay = document.getElementById("score");
   const width = 4;
+  const target = 2048;
   const Buttons = [];
   outer.style.height = 100 * width + "px";
   outer.style.width = 100 * width + "px";
@@ -26,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let randomNumber = Math.floor(Math.random() * Buttons.length);
     if (Buttons[randomNumber].innerHTML == 0) {
       Buttons[randomNumber].innerHTML = 2;
+      loseCheck();
     } else randomNumberGenerator();
   }
 
@@ -51,8 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
           : fillZero.concat(filteredRow);
       console.log("New Row", newRow);
 
-      for (let k = 0; k < width; k++) {
-        Buttons[i + k].innerHTML = newRow[k];
+      for (let j = 0; j < width; j++) {
+        Buttons[i + j].innerHTML = newRow[j];
       }
     }
   }
@@ -60,18 +62,27 @@ document.addEventListener("DOMContentLoaded", () => {
   //combine Row
   function combineRow() {
     for (let i = 0; i < Buttons.length - 1; i++) {
-      if (
-        parseInt(Buttons[i].innerHTML) == parseInt(Buttons[i + 1].innerHTML)
-      ) {
+      if (Buttons[i].innerHTML == Buttons[i + 1].innerHTML) {
         Buttons[i + 1].innerHTML =
           parseInt(Buttons[i].innerHTML) + parseInt(Buttons[i + 1].innerHTML);
         Buttons[i].innerHTML = 0;
       }
     }
+    winCheck();
   }
 
   //combine Column
-  function combineCol() {}
+  function combineCol() {
+    for (let i = 0; i < Buttons.length - width; i++) {
+      if (Buttons[i].innerHTML == Buttons[i + width].innerHTML) {
+        Buttons[i + width].innerHTML =
+          parseInt(Buttons[i].innerHTML) +
+          parseInt(Buttons[i + width].innerHTML);
+        Buttons[i].innerHTML = 0;
+      }
+    }
+    winCheck();
+  }
 
   //Button Click Call
   function InputControl(e) {
@@ -89,18 +100,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //Left - Right, Up - Down Button Control
   function keyLeftRightUpDown(val) {
-    val == "left" || val === "right" ? moveLeftRight(val) : moveUpDown(val);
-    val == "left" || val === "right" ? combineRow() : combineCol();
-    val == "left" || val === "right" ? moveLeftRight(val) : moveUpDown(val);
+    val === "left" || val === "right" ? moveLeftRight(val) : moveUpDown(val);
+    val === "left" || val === "right" ? combineRow() : combineCol();
+    val === "left" || val === "right" ? moveLeftRight(val) : moveUpDown(val);
     randomNumberGenerator();
   }
 
   //for Up - Down Move
   function moveUpDown(val) {
-    for (let i = 0; i < width; i = i++) {
+    for (let i = 0; i < width; i++) {
       let column = [];
-      for (let k = i; k < Buttons.length; k = k + width) {
-        column.push(parseInt(Buttons[k].innerHTML));
+      for (let j = i; j < Buttons.length; j = j + width) {
+        column.push(parseInt(Buttons[j].innerHTML));
       }
       console.log("Column", column);
 
@@ -117,9 +128,33 @@ document.addEventListener("DOMContentLoaded", () => {
           : fillZero.concat(filteredColumn);
       console.log("New Column", newColumn);
 
-      for (let k = 0; k < width; k++, j = j + width) {
-        Buttons[i + k * width].innerHTML = newColumn[k];
+      for (let j = i; j < Buttons.length; j = j + width) {
+        Buttons[j].innerHTML = newColumn[Math.floor(j / width)];
       }
+    }
+  }
+
+  //check for win
+  function winCheck() {
+    let flag = false;
+    for (let i = 0; i < Buttons.length; i++) {
+      if (parseInt(Buttons[i].innerHTML) == target) flag = true;
+    }
+    if (flag) {
+      alert("You Win the Game");
+      document.removeEventListener("keyup", InputControl);
+    }
+  }
+
+  //check for lose
+  function loseCheck() {
+    let flag = false;
+    for (let i = 0; i < Buttons.length; i++) {
+      if (parseInt(Buttons[i].innerHTML) == 0) flag = true;
+    }
+    if (!flag) {
+      alert("You Lose the Game");
+      document.removeEventListener("keyup", InputControl);
     }
   }
 });

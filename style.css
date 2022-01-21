@@ -5,11 +5,6 @@
   font-family: "Poppins", "sans-serif";
 }
 
-.score-container {
-  text-align: center;
-  margin-top: 20px;
-}
-
 #outer-box {
   display: flex;
   flex-wrap: wrap;
