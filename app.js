@@ -70,25 +70,42 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //combine Row
-  function combineRow() {
-    for (let i = 0; i < Buttons.length - 1; i++) {
-      if (Buttons[i].innerHTML == Buttons[i + 1].innerHTML) {
-        Buttons[i + 1].innerHTML =
-          parseInt(Buttons[i].innerHTML) + parseInt(Buttons[i + 1].innerHTML);
-        Buttons[i].innerHTML = 0;
+  function combineRow(val) {
+    if (val == "left") {
+      for (let i = 0; i < Buttons.length - 1; i++) {
+        if (i % width == width - 1) continue;
+        if (Buttons[i].innerHTML == Buttons[i + 1].innerHTML) {
+          Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
+          Buttons[i + 1].innerHTML = 0;
+        }
+      }
+    } else {
+      for (let i = Buttons.length - 1; i >= 0; i--) {
+        if (i % width == width) continue;
+        if (Buttons[i].innerHTML == Buttons[i - 1].innerHTML) {
+          Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
+          Buttons[i - 1].innerHTML = 0;
+        }
       }
     }
     winCheck();
   }
 
   //combine Column
-  function combineCol() {
-    for (let i = 0; i < Buttons.length - width; i++) {
-      if (Buttons[i].innerHTML == Buttons[i + width].innerHTML) {
-        Buttons[i + width].innerHTML =
-          parseInt(Buttons[i].innerHTML) +
-          parseInt(Buttons[i + width].innerHTML);
-        Buttons[i].innerHTML = 0;
+  function combineCol(val) {
+    if (val == "up") {
+      for (let i = 0; i < Buttons.length - width; i++) {
+        if (Buttons[i].innerHTML == Buttons[i + width].innerHTML) {
+          Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
+          Buttons[i + width].innerHTML = 0;
+        }
+      }
+    } else {
+      for (let i = Buttons.length - 1; i >= width; i--) {
+        if (Buttons[i].innerHTML == Buttons[i - width].innerHTML) {
+          Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
+          Buttons[i - width].innerHTML = 0;
+        }
       }
     }
     winCheck();
@@ -115,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
   //Left - Right, Up - Down Button Control
   function keyLeftRightUpDown(val) {
     val === "left" || val === "right" ? moveLeftRight(val) : moveUpDown(val);
-    val === "left" || val === "right" ? combineRow() : combineCol();
+    val === "left" || val === "right" ? combineRow(val) : combineCol(val);
     val === "left" || val === "right" ? moveLeftRight(val) : moveUpDown(val);
     randomNumberGenerator();
   }
