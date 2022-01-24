@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   const outer = document.getElementById("outer-box");
   const scoreDisplay = document.getElementById("score");
-  const width = 4;
-  const target = 2048;
+  const width = parseInt(prompt("Enter the no. of Box ratio like - 2, 4, 8"));
+  const target = 512 * width;
   const Buttons = [];
   outer.style.height = 125 * width + "px";
   outer.style.width = 125 * width + "px";
+  outer.style.gridTemplateColumns = "repeat(" + width + ", 1fr)";
 
   //dynamically buttons display
   function ButtonMaker() {
@@ -24,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // hide Zeros
   function HideZeros() {
-    console.log("I am calling");
     for (let i = 0; i < Buttons.length; i++) {
       if (Buttons[i].innerHTML == 0) {
         Buttons[i].style.color = "transparent";

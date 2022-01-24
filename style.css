@@ -7,7 +7,7 @@
 
 #outer-box {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  /* grid-template-columns: auto auto auto auto; */
   grid-gap: 15px;
   background: #bbada0;
   border-radius: 6px;
