@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const outer = document.getElementById("outer-box");
-  const scoreDisplay = document.getElementById("score");
+  const score = document.getElementById("score");
   const width = parseInt(prompt("Enter the no. of Box ratio like - 2, 4, 8"));
   const target = 512 * width;
   const Buttons = [];
@@ -81,6 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (i % width == width - 1) continue;
         if (Buttons[i].innerHTML == Buttons[i + 1].innerHTML) {
           Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
+          score.innerHTML =
+            parseInt(score.innerHTML) + parseInt(Buttons[i].innerHTML);
           Buttons[i + 1].innerHTML = 0;
         }
       }
@@ -89,6 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (i % width == width) continue;
         if (Buttons[i].innerHTML == Buttons[i - 1].innerHTML) {
           Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
+          score.innerHTML =
+            parseInt(score.innerHTML) + parseInt(Buttons[i].innerHTML);
           Buttons[i - 1].innerHTML = 0;
         }
       }
@@ -102,6 +106,8 @@ document.addEventListener("DOMContentLoaded", () => {
       for (let i = 0; i < Buttons.length - width; i++) {
         if (Buttons[i].innerHTML == Buttons[i + width].innerHTML) {
           Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
+          score.innerHTML =
+            parseInt(score.innerHTML) + parseInt(Buttons[i].innerHTML);
           Buttons[i + width].innerHTML = 0;
         }
       }
@@ -109,6 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
       for (let i = Buttons.length - 1; i >= width; i--) {
         if (Buttons[i].innerHTML == Buttons[i - width].innerHTML) {
           Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
+          score.innerHTML =
+            parseInt(score.innerHTML) + parseInt(Buttons[i].innerHTML);
           Buttons[i - width].innerHTML = 0;
         }
       }

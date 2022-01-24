@@ -5,13 +5,26 @@
   font-family: "Poppins", "sans-serif";
 }
 
+#score-container {
+  background: #bbada0;
+  padding: 8px 25px;
+  height: 80px;
+  width: 150px;
+  border-radius: 3px;
+  color: white;
+  margin: 10px auto;
+  text-align: center;
+  text-transform: uppercase;
+  display: block;
+}
+
 #outer-box {
   display: grid;
   /* grid-template-columns: auto auto auto auto; */
   grid-gap: 15px;
   background: #bbada0;
   border-radius: 6px;
-  margin: 15px auto;
+  margin: 0 auto;
   padding: 15px;
 }
 
