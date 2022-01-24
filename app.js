@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const width = 4;
   const target = 2048;
   const Buttons = [];
-  outer.style.height = 100 * width + "px";
-  outer.style.width = 100 * width + "px";
+  outer.style.height = 125 * width + "px";
+  outer.style.width = 125 * width + "px";
 
   //dynamically buttons display
   function ButtonMaker() {
