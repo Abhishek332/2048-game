@@ -24,10 +24,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // hide Zeros
   function HideZeros() {
+    console.log("I am calling");
     for (let i = 0; i < Buttons.length; i++) {
-      if (Buttons[i].innerHTML == 0)
-        Buttons[i].style.color = "rgba(0, 255, 255, 0.904)";
-      else Buttons[i].style.color = "white";
+      if (Buttons[i].innerHTML == 0) {
+        Buttons[i].style.color = "transparent";
+        Buttons[i].style.backgroundColor = "rgba(238, 228, 218, 0.35)";
+      } else {
+        Buttons[i].style.color = "#776E65";
+        Buttons[i].style.backgroundColor = "#eee1c9";
+      }
     }
   }
   HideZeros();
@@ -80,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     } else {
-      for (let i = Buttons.length - 1; i >= 0; i--) {
+      for (let i = Buttons.length - 1; i > 0; i--) {
         if (i % width == width) continue;
         if (Buttons[i].innerHTML == Buttons[i - 1].innerHTML) {
           Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
@@ -115,16 +120,12 @@ document.addEventListener("DOMContentLoaded", () => {
   function InputControl(e) {
     if (e.keyCode === 37) {
       keyLeftRightUpDown("left");
-      HideZeros();
     } else if (e.keyCode === 38) {
       keyLeftRightUpDown("up");
-      HideZeros();
     } else if (e.keyCode === 39) {
       keyLeftRightUpDown("right");
-      HideZeros();
     } else if (e.keyCode === 40) {
       keyLeftRightUpDown("down");
-      HideZeros();
     }
   }
   document.addEventListener("keyup", InputControl);
@@ -135,6 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
     val === "left" || val === "right" ? combineRow(val) : combineCol(val);
     val === "left" || val === "right" ? moveLeftRight(val) : moveUpDown(val);
     randomNumberGenerator();
+    HideZeros();
   }
 
   //for Up - Down Move
