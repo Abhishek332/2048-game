@@ -1,201 +1,207 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const outer = document.getElementById("outer-box");
-  const score = document.getElementById("score");
-  const width = parseInt(prompt("Enter the no. of Box ratio like - 2, 4, 8"));
-  const target = 512 * width;
-  const Buttons = [];
-  outer.style.height = 125 * width + "px";
-  outer.style.width = 125 * width + "px";
-  outer.style.gridTemplateColumns = "repeat(" + width + ", 1fr)";
+document.addEventListener('DOMContentLoaded', () => {
+	const outer = document.getElementById('outer-box');
+	const score = document.getElementById('score');
+	const width = parseInt(prompt('Enter the no. of Box ratio like - 2, 4, 8'));
+	const target = 512 * width;
+	const Buttons = [];
+	outer.style.height = 125 * width + 'px';
+	outer.style.width = 125 * width + 'px';
+	outer.style.gridTemplateColumns = 'repeat(' + width + ', 1fr)';
 
-  //dynamically buttons display
-  function ButtonMaker() {
-    for (let i = 0; i < width * width; i++) {
-      const Btn = document.createElement("div");
-      Btn.innerHTML = 0;
-      outer.appendChild(Btn);
-      Buttons.push(Btn);
-    }
-    let occuranceOfTwo = width / 2;
-    for (let i = 0; i < occuranceOfTwo; i++) {
-      randomNumberGenerator();
-    }
-  }
-  ButtonMaker();
+	//dynamically buttons display
+	function ButtonMaker() {
+		for (let i = 0; i < width * width; i++) {
+			const Btn = document.createElement('div');
+			Btn.innerHTML = 0;
+			outer.appendChild(Btn);
+			Buttons.push(Btn);
+		}
+		let occuranceOfTwo = width / 2;
+		for (let i = 0; i < occuranceOfTwo; i++) {
+			randomNumberGenerator();
+		}
+	}
+	ButtonMaker();
 
-  // hide Zeros
-  function HideZeros() {
-    for (let i = 0; i < Buttons.length; i++) {
-      if (Buttons[i].innerHTML == 0) {
-        Buttons[i].style.color = "transparent";
-        Buttons[i].style.backgroundColor = "rgba(238, 228, 218, 0.35)";
-      } else {
-        Buttons[i].style.color = "#776E65";
-        Buttons[i].style.backgroundColor = "#eee1c9";
-      }
-    }
-  }
-  HideZeros();
+	// hide Zeros
+	function HideZeros() {
+		for (let i = 0; i < Buttons.length; i++) {
+			if (Buttons[i].innerHTML == 0) {
+				Buttons[i].style.color = 'transparent';
+				Buttons[i].style.backgroundColor = 'rgba(238, 228, 218, 0.35)';
+			} else {
+				Buttons[i].style.color = '#776E65';
+				Buttons[i].style.backgroundColor = '#eee1c9';
+			}
+		}
+	}
+	HideZeros();
 
-  // random no. generate
-  function randomNumberGenerator() {
-    let randomNumber = Math.floor(Math.random() * Buttons.length);
-    if (Buttons[randomNumber].innerHTML == 0) {
-      Buttons[randomNumber].innerHTML = 2;
-      loseCheck();
-    } else randomNumberGenerator();
-  }
+	// random no. generate
+	function randomNumberGenerator() {
+		let randomNumber = Math.floor(Math.random() * Buttons.length);
+		if (Buttons[randomNumber].innerHTML == 0) {
+			Buttons[randomNumber].innerHTML = 2;
+			loseCheck();
+		} else randomNumberGenerator();
+	}
 
-  //for Left - Right move
-  function moveLeftRight(val) {
-    for (let i = 0; i < width * width; i = i + width) {
-      let row = [];
-      for (let k = 0; k < width; k++) {
-        row.push(parseInt(Buttons[k + i].innerHTML));
-      }
-      console.log("Row", row);
+	//for Left - Right move
+	function moveLeftRight(val) {
+		for (let i = 0; i < width * width; i = i + width) {
+			let row = [];
+			for (let k = 0; k < width; k++) {
+				row.push(parseInt(Buttons[k + i].innerHTML));
+			}
+			console.log('Row', row);
 
-      let filteredRow = row.filter((num) => num);
-      console.log("Filtered Row", filteredRow);
+			let filteredRow = row.filter((num) => num);
+			console.log('Filtered Row', filteredRow);
 
-      let Number_Of_Blank_Boxes = width - filteredRow.length;
-      let fillZero = Array(Number_Of_Blank_Boxes).fill(0);
-      console.log("Blank Row", fillZero);
+			let Number_Of_Blank_Boxes = width - filteredRow.length;
+			let fillZero = Array(Number_Of_Blank_Boxes).fill(0);
+			console.log('Blank Row', fillZero);
 
-      let newRow =
-        val == "left"
-          ? filteredRow.concat(fillZero)
-          : fillZero.concat(filteredRow);
-      console.log("New Row", newRow);
+			let newRow =
+				val == 'left'
+					? filteredRow.concat(fillZero)
+					: fillZero.concat(filteredRow);
+			console.log('New Row', newRow);
 
-      for (let j = 0; j < width; j++) {
-        Buttons[i + j].innerHTML = newRow[j];
-      }
-    }
-  }
+			for (let j = 0; j < width; j++) {
+				Buttons[i + j].innerHTML = newRow[j];
+			}
+		}
+	}
 
-  //combine Row
-  function combineRow(val) {
-    if (val == "left") {
-      for (let i = 0; i < Buttons.length - 1; i++) {
-        if (i % width == width - 1) continue;
-        if (Buttons[i].innerHTML == Buttons[i + 1].innerHTML) {
-          Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
-          score.innerHTML =
-            parseInt(score.innerHTML) + parseInt(Buttons[i].innerHTML);
-          Buttons[i + 1].innerHTML = 0;
-        }
-      }
-    } else {
-      for (let i = Buttons.length - 1; i > 0; i--) {
-        if (i % width == width) continue;
-        if (Buttons[i].innerHTML == Buttons[i - 1].innerHTML) {
-          Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
-          score.innerHTML =
-            parseInt(score.innerHTML) + parseInt(Buttons[i].innerHTML);
-          Buttons[i - 1].innerHTML = 0;
-        }
-      }
-    }
-    winCheck();
-  }
+	//combine Row
+	function combineRow(val) {
+		if (val == 'left') {
+			for (let i = 0; i < Buttons.length - 1; i++) {
+				if (i % width == width - 1) continue;
+				if (Buttons[i].innerHTML == Buttons[i + 1].innerHTML) {
+					Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
+					score.innerHTML =
+						parseInt(score.innerHTML) + parseInt(Buttons[i].innerHTML);
+					Buttons[i + 1].innerHTML = 0;
+				}
+			}
+		} else {
+			for (let i = Buttons.length - 1; i > 0; i--) {
+				if (i % width == width) continue;
+				if (Buttons[i].innerHTML == Buttons[i - 1].innerHTML) {
+					Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
+					score.innerHTML =
+						parseInt(score.innerHTML) + parseInt(Buttons[i].innerHTML);
+					Buttons[i - 1].innerHTML = 0;
+				}
+			}
+		}
+		winCheck();
+	}
 
-  //combine Column
-  function combineCol(val) {
-    if (val == "up") {
-      for (let i = 0; i < Buttons.length - width; i++) {
-        if (Buttons[i].innerHTML == Buttons[i + width].innerHTML) {
-          Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
-          score.innerHTML =
-            parseInt(score.innerHTML) + parseInt(Buttons[i].innerHTML);
-          Buttons[i + width].innerHTML = 0;
-        }
-      }
-    } else {
-      for (let i = Buttons.length - 1; i >= width; i--) {
-        if (Buttons[i].innerHTML == Buttons[i - width].innerHTML) {
-          Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
-          score.innerHTML =
-            parseInt(score.innerHTML) + parseInt(Buttons[i].innerHTML);
-          Buttons[i - width].innerHTML = 0;
-        }
-      }
-    }
-    winCheck();
-  }
+	//combine Column
+	function combineCol(val) {
+		if (val == 'up') {
+			for (let i = 0; i < Buttons.length - width; i++) {
+				if (Buttons[i].innerHTML == Buttons[i + width].innerHTML) {
+					Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
+					score.innerHTML =
+						parseInt(score.innerHTML) + parseInt(Buttons[i].innerHTML);
+					Buttons[i + width].innerHTML = 0;
+				}
+			}
+		} else {
+			for (let i = Buttons.length - 1; i >= width; i--) {
+				if (Buttons[i].innerHTML == Buttons[i - width].innerHTML) {
+					Buttons[i].innerHTML = 2 * parseInt(Buttons[i].innerHTML);
+					score.innerHTML =
+						parseInt(score.innerHTML) + parseInt(Buttons[i].innerHTML);
+					Buttons[i - width].innerHTML = 0;
+				}
+			}
+		}
+		winCheck();
+	}
 
-  //Button Click Call
-  function InputControl(e) {
-    if (e.keyCode === 37) {
-      keyLeftRightUpDown("left");
-    } else if (e.keyCode === 38) {
-      keyLeftRightUpDown("up");
-    } else if (e.keyCode === 39) {
-      keyLeftRightUpDown("right");
-    } else if (e.keyCode === 40) {
-      keyLeftRightUpDown("down");
-    }
-  }
-  document.addEventListener("keyup", InputControl);
+	//Button Click Call
+	function InputControl(e) {
+		if (e.keyCode === 37) {
+			keyLeftRightUpDown('left');
+		} else if (e.keyCode === 38) {
+			keyLeftRightUpDown('up');
+		} else if (e.keyCode === 39) {
+			keyLeftRightUpDown('right');
+		} else if (e.keyCode === 40) {
+			keyLeftRightUpDown('down');
+		}
+	}
+	document.addEventListener('keyup', InputControl);
 
-  //Left - Right, Up - Down Button Control
-  function keyLeftRightUpDown(val) {
-    val === "left" || val === "right" ? moveLeftRight(val) : moveUpDown(val);
-    val === "left" || val === "right" ? combineRow(val) : combineCol(val);
-    val === "left" || val === "right" ? moveLeftRight(val) : moveUpDown(val);
-    randomNumberGenerator();
-    HideZeros();
-  }
+	//Left - Right, Up - Down Button Control
+	function keyLeftRightUpDown(val) {
+		if (val === 'left' || val === 'right') {
+			moveLeftRight(val);
+			combineRow(val);
+			moveLeftRight(val);
+		} else {
+			moveUpDown(val);
+			combineCol(val);
+			moveUpDown(val);
+		}
+		randomNumberGenerator();
+		HideZeros();
+	}
 
-  //for Up - Down Move
-  function moveUpDown(val) {
-    for (let i = 0; i < width; i++) {
-      let column = [];
-      for (let j = i; j < Buttons.length; j = j + width) {
-        column.push(parseInt(Buttons[j].innerHTML));
-      }
-      console.log("Column", column);
+	//for Up - Down Move
+	function moveUpDown(val) {
+		for (let i = 0; i < width; i++) {
+			let column = [];
+			for (let j = i; j < Buttons.length; j = j + width) {
+				column.push(parseInt(Buttons[j].innerHTML));
+			}
+			console.log('Column', column);
 
-      let filteredColumn = column.filter((num) => num);
-      console.log("Filtered Column", filteredColumn);
+			let filteredColumn = column.filter((num) => num);
+			console.log('Filtered Column', filteredColumn);
 
-      let Number_Of_Blank_Boxes = width - filteredColumn.length;
-      let fillZero = Array(Number_Of_Blank_Boxes).fill(0);
-      console.log("Blank Row", fillZero);
+			let Number_Of_Blank_Boxes = width - filteredColumn.length;
+			let fillZero = Array(Number_Of_Blank_Boxes).fill(0);
+			console.log('Blank Row', fillZero);
 
-      let newColumn =
-        val == "up"
-          ? filteredColumn.concat(fillZero)
-          : fillZero.concat(filteredColumn);
-      console.log("New Column", newColumn);
+			let newColumn =
+				val == 'up'
+					? filteredColumn.concat(fillZero)
+					: fillZero.concat(filteredColumn);
+			console.log('New Column', newColumn);
 
-      for (let j = i; j < Buttons.length; j = j + width) {
-        Buttons[j].innerHTML = newColumn[Math.floor(j / width)];
-      }
-    }
-  }
+			for (let j = i; j < Buttons.length; j = j + width) {
+				Buttons[j].innerHTML = newColumn[Math.floor(j / width)];
+			}
+		}
+	}
 
-  //check for win
-  function winCheck() {
-    let flag = false;
-    for (let i = 0; i < Buttons.length; i++) {
-      if (parseInt(Buttons[i].innerHTML) == target) flag = true;
-    }
-    if (flag) {
-      alert("You Win the Game");
-      document.removeEventListener("keyup", InputControl);
-    }
-  }
+	//check for win
+	function winCheck() {
+		let flag = false;
+		for (let i = 0; i < Buttons.length; i++) {
+			if (parseInt(Buttons[i].innerHTML) == target) flag = true;
+		}
+		if (flag) {
+			alert('You Win the Game');
+			document.removeEventListener('keyup', InputControl);
+		}
+	}
 
-  //check for lose
-  function loseCheck() {
-    let flag = false;
-    for (let i = 0; i < Buttons.length; i++) {
-      if (parseInt(Buttons[i].innerHTML) == 0) flag = true;
-    }
-    if (!flag) {
-      alert("You Lose the Game");
-      document.removeEventListener("keyup", InputControl);
-    }
-  }
+	//check for lose
+	function loseCheck() {
+		let flag = false;
+		for (let i = 0; i < Buttons.length; i++) {
+			if (parseInt(Buttons[i].innerHTML) == 0) flag = true;
+		}
+		if (!flag) {
+			alert('You Lose the Game');
+			document.removeEventListener('keyup', InputControl);
+		}
+	}
 });
