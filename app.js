@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 	const outer = document.getElementById('outer-box');
 	const score = document.getElementById('score');
-	const width = parseInt(prompt('Enter the no. of Box ratio like - 2, 4, 8'));
+	const width = 4; // For dynamic width can change value here
 	const target = 512 * width;
 	const Buttons = [];
 	outer.style.height = 125 * width + 'px';
